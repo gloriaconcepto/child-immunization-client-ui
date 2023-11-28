@@ -1,8 +1,8 @@
 import React from "react";
+import FormContainer from "../../components/formCard";
+import './home.scss';
+const HomeManagerView: React.FC = () => {
+  return (<div className="home"><FormContainer/></div>);
+};
 
-const HomeManagerView:React.FC=()=>{
-
- return(<>home page</>)
-}
-
-export default HomeManagerView
+export default HomeManagerView;
