@@ -11,5 +11,13 @@
   // margin-top: 164px;
   // margin-left: 16px;
   // margin-right: 16px;
-
+.img-center-wrapper{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.img-center{
+  position: absolute;
+}
 }
