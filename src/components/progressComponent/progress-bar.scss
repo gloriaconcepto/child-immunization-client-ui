@@ -10,11 +10,17 @@
     margin-top: 16px;
     overflow: hidden;
 
-    .progress {
+    .progress-1 {
       height: 100%;
       background: #00A85A;
       transition: width 0.5s ease-in-out;
       width: 50%;
+    }
+    .progress-2 {
+      height: 100%;
+      background: #00A85A;
+      transition: width 0.5s ease-in-out;
+      width: 100%;
     }
   }
 }

@@ -35,9 +35,7 @@ const FormContainer: React.FC = () => {
   const [guardianData, setGuardianData] = useState<any>({});
   const [congratulationModal, setCongratulationModal] = useState<boolean>(false);
 
-  const onCloseModal = () => {
-    setCongratulationModal(false);
-  };
+ 
   const stateFieldChange = (value: string) => {
     form.setFieldsValue({
       lga: ""
@@ -63,6 +61,7 @@ const FormContainer: React.FC = () => {
       setStep(2);
     } else {
       setScreenMode(ScreenMode.GUARDIAN_FORM);
+      setIndex([]);
       setStep(1);
     }
   };
@@ -136,6 +135,9 @@ const FormContainer: React.FC = () => {
     setScreenModeFunc(ScreenMode.GUARDIAN_FORM);
     setGuardianData({});
     setCongratulationModal(false);
+    setStep(1);
+    setShowNextButton(false);
+    setIndex([]);
     form.resetFields();
   }
   return (
@@ -145,7 +147,7 @@ const FormContainer: React.FC = () => {
           <img src={Icon.BabyCenter} alt="baby center" className="img-center" />
         </div>
 
-        <ProgressLevel />
+        <ProgressLevel level={step}/>
         <div className="section-setting" style={{ marginTop: "10px" }}>
           <span className="step-label">Step</span>
           <span
@@ -574,7 +576,7 @@ const FormContainer: React.FC = () => {
         className="modal-congratulation"
         // width={'80%'}
         open={congratulationModal}
-        onCancel={onCloseModal}
+        onCancel={onCloseCongratModal}
         footer={null}
         width="50%"
       >
