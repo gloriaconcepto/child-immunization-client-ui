@@ -27,4 +27,26 @@
     font-weight: 400;
     line-height: normal;
   }
+  .page-text {
+    display: flex;
+    justify-content: center;
+    color: #333;
+    font-family: Comic Neue;
+    font-size: 33.853px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+  .nav-link-xx {
+    display: flex;
+    justify-content: center;
+    color: #f58220;
+    font-family: Comic Neue;
+    font-size: 14.207px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+
+    text-decoration: none;
+  }
 }

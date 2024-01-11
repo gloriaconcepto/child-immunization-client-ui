@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./not-found.scss";
 import Icon from "../../SVGs";
 
@@ -18,6 +19,12 @@ const PageNotFound: React.FC = () => {
         <div className="opps-text">
           <span>Ooops!</span>
         </div>
+        <div className="page-text">
+          <span>PAGE NOT FOUND</span>
+        </div>
+        <Link to={"/"} className="nav-link-xx">
+          <span>Go back and try a different link</span>
+        </Link>
       </div>{" "}
     </div>
   );

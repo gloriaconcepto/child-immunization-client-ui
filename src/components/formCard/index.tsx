@@ -33,7 +33,7 @@ const FormContainer: React.FC = () => {
   const [showNextButton, setShowNextButton] = useState<boolean>(false);
   const [lga, setLga] = useState<any>([]);
   const [guardianData, setGuardianData] = useState<any>({});
-  const [congratulationModal, setCongratulationModal] = useState<boolean>(true);
+  const [congratulationModal, setCongratulationModal] = useState<boolean>(false);
 
   const onCloseModal = () => {
     setCongratulationModal(false);
@@ -136,6 +136,7 @@ const FormContainer: React.FC = () => {
     setScreenModeFunc(ScreenMode.GUARDIAN_FORM);
     setGuardianData({});
     setCongratulationModal(false);
+    form.resetFields();
   }
   return (
     <>
