@@ -4,7 +4,11 @@ import BabyCenter from './baby-center.svg';
 import BabyStage1Left from './baby-stage-1-left.svg';
 import BabyStage1Right from './baby-stage-1-right.svg';
 import NigeriaFlagIcon from './nigeria-flag.svg';
-import DeleteIcon from './delete-icon.svg'
+import DeleteIcon from './delete-icon.svg';
+import BabyCryIcon from './cry-baby.svg'
+import CongratGifIcon from './cong-2.gif';
+import Icon404Icon from './404.svg';
+import OppsIcon from './opps.svg';
 const Icon = {
     BabyLeft,
     BabyRight,
@@ -12,6 +16,10 @@ const Icon = {
     BabyStage1Left,
     BabyStage1Right,
     NigeriaFlagIcon,
-    DeleteIcon
+    DeleteIcon,
+    Icon404Icon,
+    CongratGifIcon,
+    BabyCryIcon,
+    OppsIcon
 }
 export default Icon

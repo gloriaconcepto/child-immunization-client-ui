@@ -1,0 +1,30 @@
+.not-found-wrapper {
+  margin-top: 200px;
+  margin-left: 17px;
+  margin-right: 17px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .baby-cry-id {
+    position: absolute;
+    left: 49px;
+    top: 11px;
+  }
+  .opps-icon {
+    position: absolute;
+    left: 34px;
+    top: -73px;
+  }
+
+  .opps-text {
+    position: absolute;
+    top: -68px;
+    right: 69px;
+    color: #fff;
+    font-family: Barrio;
+    font-size: 45.834px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}
