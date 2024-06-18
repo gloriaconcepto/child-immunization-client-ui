@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Button, Alert, Form, Input, Spin, Select, Radio, Modal } from "antd";
+
+import { collection, addDoc } from "firebase/firestore";
 import type { RadioChangeEvent } from "antd";
 import {
   MinusCircleOutlined,
@@ -14,6 +16,7 @@ import ProgressLevel from "../progressComponent";
 import { nigeriaData } from "../../states";
 import { ScreenMode } from "./types";
 import { Months, NumberOfImumminzed } from "../../months";
+import { dataBase } from "../../firebaseConfig";
 const maxStep = 2;
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -35,7 +38,7 @@ const FormContainer: React.FC = () => {
   const [guardianData, setGuardianData] = useState<any>({});
   const [congratulationModal, setCongratulationModal] = useState<boolean>(false);
 
- 
+
   const stateFieldChange = (value: string) => {
     form.setFieldsValue({
       lga: ""
@@ -66,7 +69,7 @@ const FormContainer: React.FC = () => {
     }
   };
   const setImmunizationMonths = (e: any, key: number) => {
-    if (e.target.value === "yesimmunized") {
+    if (e.target.value === true) {
       if (!indexTt?.includes(key)) {
         let tempArry: number[] = [...indexTt];
 
@@ -109,29 +112,43 @@ const FormContainer: React.FC = () => {
     }
   };
 
-  const onFinish = () => {
+  const onFinish = async () => {
     const formValues = form.getFieldsValue();
-    // console.log("Received values of KK:", formValues);
 
-    if (Object.keys(guardianData).length > 0) {
-      // console.log(guardianData);
-      let data = {
-        guardianData,
-        babydata: formValues?.babydata
-      };
-      console.log("final output", data);
-      setTimeout(() => {
-        setCongratulationModal(true);
-      }, 4000);
+    try {
+      if (Object.keys(guardianData).length > 0) {
+        const currentDate = new Date().toISOString();
+        const modifiedData = formValues?.babydata.map((record: any) => ({
+          ...record,
+          savedate: currentDate,
+        }));
+        let data = {
+          guardianData,
+          babydata: modifiedData
+        };
+
+        const guardianRef = await addDoc(collection(dataBase, "guardians"), data.guardianData);
+        // Save each baby data under the guardian's document
+        if (guardianRef) {
+          for (const baby of data.babydata) {
+            await addDoc(collection(dataBase, `guardians/${guardianRef.id}/babies`), baby);
+          }
+          setCongratulationModal(true);
+        }
+      }
+    } catch (err) {
+      console.error(err)
     }
+
   };
+
   const onContinue = () => {
     const guardianFormData = form.getFieldsValue();
     console.log(guardianFormData);
     setScreenModeFunc(ScreenMode.BABY_FORM);
     setGuardianData(guardianFormData);
   };
-  const onCloseCongratModal=()=>{
+  const onCloseCongratModal = () => {
     setScreenModeFunc(ScreenMode.GUARDIAN_FORM);
     setGuardianData({});
     setCongratulationModal(false);
@@ -147,7 +164,7 @@ const FormContainer: React.FC = () => {
           <img src={Icon.BabyCenter} alt="baby center" className="img-center" />
         </div>
 
-        <ProgressLevel level={step}/>
+        <ProgressLevel level={step} />
         <div className="section-setting" style={{ marginTop: "10px" }}>
           <span className="step-label">Step</span>
           <span
@@ -251,7 +268,7 @@ const FormContainer: React.FC = () => {
                   size="large"
                   // showSearch
                   allowClear={false}
-                  // onChange={stateFieldChange}
+                // onChange={stateFieldChange}
                 >
                   {lga.map((lga: string, index: string) => (
                     <Option key={index} value={lga} name={lga}>
@@ -319,7 +336,7 @@ const FormContainer: React.FC = () => {
                                   <img
                                     src={Icon.NigeriaFlagIcon}
                                     alt="Nigeria Flag"
-                                    // className="img-center"
+                                  // className="img-center"
                                   />
                                 }
                               />
@@ -468,13 +485,13 @@ const FormContainer: React.FC = () => {
                               onChange={(e) => setImmunizationMonths(e, key)}
                             >
                               <Radio
-                                value={"yesimmunized"}
+                                value={true}
                                 className="radio-check"
                               >
                                 Yes, he/she has
                               </Radio>
                               <Radio
-                                value={"noimmunized"}
+                                value={false}
                                 className="radio-check"
                               >
                                 Not at all
@@ -550,7 +567,7 @@ const FormContainer: React.FC = () => {
                           ? "button-wrapper-not-valid"
                           : "button-wrapper"
                       }
-                      //  onClick={onFinish}
+                    //  onClick={onFinish}
                     >
                       Submit form
                     </Button>
@@ -582,18 +599,18 @@ const FormContainer: React.FC = () => {
       >
         <div>
           <img src={Icon.CongratGifIcon} alt="congratulation-icon" />
-        
+
         </div>
         <div>
           <span className="congra-text-big ">Yaay! Congratulations</span>
         </div>
-        <div style={{marginTop:'14px'}}>
+        <div style={{ marginTop: '14px' }}>
           <span className="congra-text-small">Your form has been submitted succesfully</span>
         </div>
 
         <Button className="button-congra" onClick={onCloseCongratModal}>
-                <span className="congra-butt-text">Close</span>
-              </Button>
+          <span className="congra-butt-text">Close</span>
+        </Button>
       </Modal>
     </>
   );
