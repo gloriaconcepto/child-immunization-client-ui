@@ -118,15 +118,25 @@ const FormContainer: React.FC = () => {
     try {
       if (Object.keys(guardianData).length > 0) {
         const currentDate = new Date().toISOString();
-        const modifiedData = formValues?.babydata.map((record: any) => ({
-          ...record,
-          savedate: currentDate,
-        }));
+        
+        const modifiedData = formValues?.babydata.map((record: any) => {
+          if(!record.babyimmunizedbefore){
+            return  {
+              ...record,
+              babybeenimmunizdd: 0,
+              savedate: currentDate,
+            }
+          }
+          return  {
+            ...record,
+            savedate: currentDate,
+          }
+      });
         let data = {
           guardianData,
           babydata: modifiedData
         };
-
+     
         const guardianRef = await addDoc(collection(dataBase, "guardians"), data.guardianData);
         // Save each baby data under the guardian's document
         if (guardianRef) {
