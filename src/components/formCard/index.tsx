@@ -136,7 +136,7 @@ const FormContainer: React.FC = () => {
           guardianData,
           babydata: modifiedData
         };
-     
+       console.log('what the data',data)
         const guardianRef = await addDoc(collection(dataBase, "guardians"), data.guardianData);
         // Save each baby data under the guardian's document
         if (guardianRef) {
@@ -154,7 +154,7 @@ const FormContainer: React.FC = () => {
 
   const onContinue = () => {
     const guardianFormData = form.getFieldsValue();
-    console.log(guardianFormData);
+  
     setScreenModeFunc(ScreenMode.BABY_FORM);
     setGuardianData(guardianFormData);
   };
